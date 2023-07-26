@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+$header-height: 70px;
+$header-text-color: #fff;
+
+.pg-menu {
+    margin: 0;
+    display: flex;
+    list-style: none;
+    gap: .5rem;
+}
+
+.pg-menu li a {
+    display: block;
+    padding: .5rem;
+    color: #fff;
+    text-decoration: none;
+    transition: all .4s ease;
+}
+
+.pg-menu li a:hover {
+    background: #0000000d;
+}
+
+.pg-menu li a i {
+    margin-right: 12px;
+}
+
+#toggle-menu-mobile {
+    display: none;
+    color: #fff;
+}
+
+@media (max-width: 600px) {
+    .pg-menu {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 0;
+        top: $header-height;
+        right: 0;
+        background: #080B0E;
+        z-index: 1000;
+        transition: all .6s ease;
+        visibility: hidden;
+        overflow-y: hidden;
+    }
+
+    .pg-menu li a {
+        padding: 1rem .5rem;
+        margin: 0 1rem;
+        border-bottom: 2px solid #0000000d;
+    }
+
+    .pg-nav.active .pg-menu {
+        height: calc(100vh - $header-height);
+        visibility: visible;
+        overflow-y: auto;
+    }
+
+    #toggle-menu-mobile {
+        display: flex;
+        padding: .5rem 1rem;
+        font-size: 1rem;
+        border: none;
+        background: none;
+        cursor: pointer;
+        gap: .5rem;
+    }
+
+    #burger {
+        border-top: 2px solid $header-text-color;
+        color: $header-text-color;
+        width: 20px;
+        transition: none;
+    }
+
+    .pg-nav #burger::after, .pg-nav #burger::before {
+        display: block;
+        width: 20px;
+        height: 2px;
+        margin-top: 5px;
+        position: relative;
+        background: currentColor;
+        content: "";
+        transition: all .3s ease;
+    }
+
+    .pg-nav.active #burger {
+        border-top: transparent;
+    }
+
+    .pg-nav.active #burger::before {
+        transform: rotate(135deg);
+    }
+
+    .pg-nav.active #burger::after {
+        transform: rotate(-135deg);
+        top: -7px;
+    }
+}

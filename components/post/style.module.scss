@@ -1,0 +1,31 @@
+.post {
+    margin: .75rem 0;
+    padding: 1rem;
+    border-radius: .75rem;
+    background: #0A0E12;
+    height: 200px;
+    position: relative;
+
+    .title {
+        margin-bottom: 1rem;
+    }
+
+    .content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+
+        a {
+            text-decoration: underline;
+        }
+    }
+
+    .link {
+        position: absolute;
+        right: 1.2rem;
+        bottom: 1rem;
+        font-size: 1.2rem;
+    }
+}
