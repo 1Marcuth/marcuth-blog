@@ -17,7 +17,7 @@ const MarkdownWithAutoLinks: FC<IProps> = ({ children }) => {
             for (const match of matches) {
                 content = content.replace(
                     match.text,
-                    `<a href="${match.url}" target="_blank" rel="noopener noreferrer">${match.text}</a>`
+                    `[${match.text}](${match.url})`
                 )
             }
         }
