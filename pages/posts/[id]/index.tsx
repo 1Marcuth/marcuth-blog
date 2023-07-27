@@ -26,7 +26,7 @@ interface IParms {
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const serverDomain = process.env.SERVER_DOMAIN
-    const response = await axios.get(`http://${serverDomain}/posts/all/`)
+    const response = await axios.get(`https://${serverDomain}/posts/all/`)
     const posts = (response.data as IPostsResponseData).data
 
     const paths = posts.map(post => {
@@ -37,14 +37,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     return {
         paths: paths,
-        fallback: true
+        fallback: false
     }
 }
 
 export const getStaticProps: GetStaticProps<IProps> = async (context) => {
     const params = context.params as unknown as IParms
     const serverDomain = process.env.SERVER_DOMAIN
-    const response = await axios.get(`http://${serverDomain}/posts/get/${params.id}`)
+    const response = await axios.get(`https://${serverDomain}/posts/get/${params.id}`)
     const post = (response.data as IPostResponseData).data
 
     return {
@@ -53,7 +53,8 @@ export const getStaticProps: GetStaticProps<IProps> = async (context) => {
     }
 }
 
-const PostPage: FC<IProps> = ({ post: { props } }) => {
+const PostPage: FC<IProps> = ({ post: { props }, post }) => {
+    console.log(post)
     const [ postCreatedAtDateFormated, setPostCreatedAtFormated ] = useState("??/??/????, ??:??:??")
     const pageDescription = removeMarkdown(props.content).slice(0, 150) + "..."
     const pageTitle = `${props.title} - Marcuth Blog`
