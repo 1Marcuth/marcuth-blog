@@ -84,7 +84,7 @@ const PostPage: FC<IProps> = ({ post: { props } }) => {
                     <hr className="mt-3 mb-3" />
                     <section className={`${styles["content"]} px-2`}>
                         <ReactMarkdown
-                            children={props.content.replace(/\\n/g, "\n")}
+                            children={props.content}
                             components={{
                                 code({ node, inline, className, children, ...props }) {
                                     const match = /language-(\w+)/.exec(className || "")

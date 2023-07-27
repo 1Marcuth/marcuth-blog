@@ -23,7 +23,7 @@ const Post: FC<IProps> = ({ data: { props, id } }) => {
                 </h2>
             </header>
             <section className={`${styles["content"]} text-slate-500 italic`}>
-                <ReactMarkdown>{removeMarkdown(props.content.split("\\n").join(" "))}</ReactMarkdown>
+                <ReactMarkdown>{removeMarkdown(props.content.split("\n").join(" "))}</ReactMarkdown>
             </section>
             <div className={`${styles["link"]} hover:text-slate-400`}>
                 <Link href={`/posts/${id}`}>
