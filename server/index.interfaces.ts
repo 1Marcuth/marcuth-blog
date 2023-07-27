@@ -1,4 +1,5 @@
 export interface IPostsResponseData {
+    message: string
     data: IPostsDataItem[]
 }
 

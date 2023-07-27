@@ -12,7 +12,7 @@ import { formatDate } from "../../../utils/time"
 import Header from "../../../components/header"
 import Footer from "../../../components/footer"
 
-import { IPostsDataItem, IPostData } from "../../../server/index.interfaces"
+import { IPostData, IPostResponseData, IPostsResponseData } from "../../../server/index.interfaces"
 
 import styles from "./style.module.scss"
 
@@ -25,9 +25,10 @@ interface IParms {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const apiDomain = process.env.API_DOMAIN
-    const response = await axios.get(`http://${apiDomain}/api/posts/`)
-    const posts = response.data as IPostsDataItem[]
+    const serverDomain = process.env.SERVER_DOMAIN
+    const response = await axios.get(`http://${serverDomain}/posts/all/`)
+    const posts = (response.data as IPostsResponseData).data
+
     const paths = posts.map(post => {
         return {
             params: { id: post.id.toString() }
@@ -42,15 +43,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<IProps> = async (context) => {
     const params = context.params as unknown as IParms
-    const apiDomain = process.env.API_DOMAIN
-    const response = await axios.get(`http://${apiDomain}/api/posts/${params.id}`)
-    const post = response.data as IPostData
+    const serverDomain = process.env.SERVER_DOMAIN
+    const response = await axios.get(`http://${serverDomain}/posts/get/${params.id}`)
+    const post = (response.data as IPostResponseData).data
+
     return {
         props: { post }
     }
 }
 
-const PostPage: FC<IProps> = ({ post: { props },}) => {
+const PostPage: FC<IProps> = ({ post: { props } }) => {
     const [ postCreatedAtDateFormated, setPostCreatedAtFormated ] = useState("??/??/????, ??:??:??")
     const pageDescription = removeMarkdown(props.content).slice(0, 150) + "..."
     const pageTitle = `${props.title} - Marcuth Blog`

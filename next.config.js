@@ -3,7 +3,7 @@ const nextConfig = {
     reactStrictMode: true,
     content: ["./src/**/*.html", "./src/**/*.jsx", "./src/**/*.tsx"],
     postcss: {
-        plugins: [ require("tailwindcss") ],
+        plugins: [ require("tailwindcss") ]
     }
 }
 

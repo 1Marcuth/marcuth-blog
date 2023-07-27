@@ -7,16 +7,16 @@ import Footer from "../../components/footer"
 import Header from "../../components/header"
 import Post from "../../components/post"
 
-import { IPostsDataItem } from "../../server/index.interfaces"
+import { IPostsDataItem, IPostsResponseData } from "../../server/index.interfaces"
 
 interface IProps {
     posts: IPostsDataItem[]
 }
 
 export const getStaticProps: GetStaticProps<IProps> = async () => {
-    const apiDomain = process.env.API_DOMAIN
-    const response = await axios.get(`http://${apiDomain}/api/posts`)
-    const posts = response.data as IPostsDataItem[]
+    const serverDomain = process.env.SERVER_DOMAIN
+    const response = await axios.get(`http://${serverDomain}/posts/all/0/20`)
+    const posts = (response.data as IPostsResponseData).data
 
     return {
         props: { posts }
