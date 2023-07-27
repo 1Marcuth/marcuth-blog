@@ -10,7 +10,7 @@ interface IProps {
 
 const MarkdownWithAutoLinks: FC<IProps> = ({ children }) => {
     function linkify(content: string) {
-        const linkifyIt = LinkifyIt()
+        const linkifyIt = LinkifyIt().set({ fuzzyLink: false })
         const matches = linkifyIt.match(content)
 
         if (matches) {
