@@ -37,7 +37,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     return {
         paths: paths,
-        fallback: false
+        fallback: true
     }
 }
 
@@ -48,7 +48,8 @@ export const getStaticProps: GetStaticProps<IProps> = async (context) => {
     const post = (response.data as IPostResponseData).data
 
     return {
-        props: { post }
+        props: { post },
+        revalidate: 60 * 60 * 24
     }
 }
 
@@ -83,7 +84,7 @@ const PostPage: FC<IProps> = ({ post: { props } }) => {
                     <hr className="mt-3 mb-3" />
                     <section className={`${styles["content"]} px-2`}>
                         <ReactMarkdown
-                            children={props.content}
+                            children={props.content.replace(/\\n/g, "\n")}
                             components={{
                                 code({ node, inline, className, children, ...props }) {
                                     const match = /language-(\w+)/.exec(className || "")

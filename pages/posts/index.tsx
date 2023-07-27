@@ -19,7 +19,8 @@ export const getStaticProps: GetStaticProps<IProps> = async () => {
     const posts = (response.data as IPostsResponseData).data
 
     return {
-        props: { posts }
+        props: { posts },
+        revalidate: 60 * 60 * 2
     }
 }
 
