@@ -3,6 +3,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { GetStaticPaths, GetStaticProps } from "next"
 import { FC, useEffect, useState } from "react"
 import ReactMarkdown from "react-markdown"
+import linkifyIt from "linkify-it"
 import Head from "next/head"
 import axios from "axios"
 
@@ -15,6 +16,7 @@ import Footer from "../../../components/footer"
 import { IPostData, IPostResponseData, IPostsResponseData } from "../../../server/index.interfaces"
 
 import styles from "./style.module.scss"
+import MarkdownWithAutoLinks from "../../../components/markdown-with-auto-links"
 
 interface IProps {
     post: IPostData
@@ -22,6 +24,26 @@ interface IProps {
 
 interface IParms {
     id: string
+}
+
+interface ILinkfyProps {
+    childern: any
+}
+
+export const Linkfy: FC<ILinkfyProps> = ({ childern }) => {
+    const linkify = linkifyIt()
+    const matches = linkify.match(childern)
+
+    if (matches) {
+        for (const match of matches) {
+            childern = childern.replace(
+                match.text,
+                `<a href="${match.url}" target="_blank" rel="noopener noreferrer">${match.text}</a>`
+            )
+        }
+    }
+
+    return childern
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -84,27 +106,7 @@ const PostPage: FC<IProps> = ({ post: { props }, post }) => {
                     </header>
                     <hr className="mt-3 mb-3" />
                     <section className={`${styles["content"]} px-2`}>
-                        <ReactMarkdown
-                            children={props.content}
-                            components={{
-                                code({ node, inline, className, children, ...props }) {
-                                    const match = /language-(\w+)/.exec(className || "")
-
-                                    return !inline && match ? (
-                                        <SyntaxHighlighter
-                                            children={String(children).replace(/\n$/, "")}
-                                            language={match[1]}
-                                            style={materialDark as any}
-                                            {...props}
-                                        />
-                                    ) : (
-                                        <code className={className} {...props}>
-                                            {children}
-                                        </code>
-                                    )
-                                }
-                            }}
-                        />
+                        <MarkdownWithAutoLinks>{props.content}</MarkdownWithAutoLinks>
                     </section>
                 </article>
                 <hr className={styles["separator"]}/>

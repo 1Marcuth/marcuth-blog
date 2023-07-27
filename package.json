@@ -15,6 +15,7 @@
     "@types/react-dom": "18.2.7",
     "autoprefixer": "^10.4.14",
     "axios": "^1.4.0",
+    "linkify-it": "^4.0.1",
     "next": "13.4.12",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -26,6 +27,7 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
+    "@types/linkify-it": "^3.0.2",
     "@types/react-syntax-highlighter": "^15.5.7"
   }
 }
