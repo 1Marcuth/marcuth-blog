@@ -21,13 +21,13 @@
     .content {
         h1 {
             font-size: 1.7rem;
-            font-weight: 800;
+            font-weight: 700;
             margin: 1.2rem 0;
         }
 
         h2 {
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 600;
             margin: 1rem 0;
         }
 
@@ -112,9 +112,42 @@
     }
 }
 
+.separator {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    overflow: hidden;
+    background: #0A0E12;
+    border-bottom: 1px solid #21262d;
+    height: .25rem;
+    max-width: calc(1100px - 1rem);
+    width: calc(100% - 1rem);
+    padding: 0;
+    margin: 24px 0;
+    background-color: #30363d;
+    border: 0;
+}
+
 .comments {
     padding: 1.2rem 3rem 3rem 3rem;
     max-width: 1100px;
     background: #0A0E12;
     color: #fff;
+
+    .comments-icon {
+        font-size: 17px;
+        margin-right: .5rem;
+    }
+}
+
+@media (max-width: 550px) {
+    .post, .comments {
+        padding: .6rem 1.5rem 1.5rem 1.5rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .post, .comments {
+        padding: .3rem .75rem .75rem .75rem;
+    }
 }

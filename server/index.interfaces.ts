@@ -1,51 +1,30 @@
 export interface IPostsResponseData {
     data: IPostsDataItem[]
-    meta: IPostsMeta
 }
 
 export interface IPostsDataItem {
     id: number
-    attributes: IPostsAttributes
+    props: IPostsProps
 }
 
-export interface IPostsAttributes {
+export interface IPostsProps {
     title: string
     content: string
-    createdAt: string
-    updatedAt: string
-    publishedAt: string
-    author: string
-}
-
-export interface IPostsMeta {
-    pagination: IPostsPagination
-}
-
-export interface IPostsPagination {
-    page: number
-    pageSize: number
-    pageCount: number
-    total: number
+    createdAt: number
 }
 
 export interface IPostResponseData {
+    message: string
     data: IPostData
-    meta: IPostMeta
 }
 
 export interface IPostData {
     id: number
-    attributes: IPostAttributes
+    props: IPostProps
 }
 
-export interface IPostAttributes {
+export interface IPostProps {
     title: string
     content: string
-    createdAt: string
-    updatedAt: string
-    publishedAt: string
-    author: string
+    createdAt: number
 }
-
-export interface IPostMeta {}
-  

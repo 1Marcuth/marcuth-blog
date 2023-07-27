@@ -35,7 +35,9 @@ const PostsPage: FC<IProps> = ({ posts }) => {
             <Header/>
             <div className="flex justify-center items-center flex-col">
                 <div className="container">
-                {[...posts, ...posts].map((post, index) => {
+                {posts.sort((postA, postB) => {
+                    return postB.props.createdAt - postA.props.createdAt
+                }).map((post, index) => {
                     return (
                         <Post key={`post-${index}`} data={post}/>
                     )

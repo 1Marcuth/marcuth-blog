@@ -6,15 +6,15 @@ import ReactMarkdown from "react-markdown"
 import Head from "next/head"
 import axios from "axios"
 
+import UtterancComments from "../../../components/utteranc-comments"
+import { removeMarkdown } from "../../../utils/markup"
 import { formatDate } from "../../../utils/time"
+import Header from "../../../components/header"
+import Footer from "../../../components/footer"
 
 import { IPostsDataItem, IPostData } from "../../../server/index.interfaces"
 
 import styles from "./style.module.scss"
-import Header from "../../../components/header"
-import Footer from "../../../components/footer"
-import FacebookComments from "../../../components/facebook-comments"
-import UtterancComments from "../../../components/utteranc-comments"
 
 interface IProps {
     post: IPostData
@@ -50,25 +50,30 @@ export const getStaticProps: GetStaticProps<IProps> = async (context) => {
     }
 }
 
-const PostPage: FC<IProps> = ({ post: { attributes },}) => {
+const PostPage: FC<IProps> = ({ post: { props },}) => {
     const [ postCreatedAtDateFormated, setPostCreatedAtFormated ] = useState("??/??/????, ??:??:??")
-
-    useEffect(() => {
-        setPostCreatedAtFormated(formatDate(attributes.createdAt))
+    const pageDescription = removeMarkdown(props.content).slice(0, 150) + "..."
+    const pageTitle = `${props.title} - Marcuth Blog`
+    
+    useEffect(() => { 
+        setPostCreatedAtFormated(formatDate(props.createdAt))
     }, [])
 
     return (
         <>
             <Head>
-                <title>{attributes.title} - Marcuth Blog</title>
+                <title>{pageTitle}</title>
+                <meta name="description" content={pageDescription}/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <link rel="icon" href="/favicon.ico"/>
             </Head>
             <Header/>
             <div className="flex justify-center items-center flex-col">
                 <article className={`${styles["post"]} container`}>
                     <header>
-                        <h1 className="text-3xl mt-5 mb-3">{attributes.title}</h1>
+                        <h1 className="text-3xl mt-5 mb-3">{props.title}</h1>
                         <section className="flex gap-1">
-                            <span className="text-xs">{attributes.author}</span>
+                            <span className="text-xs">Marcuth</span>
                             <span className="text-xs">-</span>
                             <span className="text-xs">{postCreatedAtDateFormated}</span>
                         </section>
@@ -76,7 +81,7 @@ const PostPage: FC<IProps> = ({ post: { attributes },}) => {
                     <hr className="mt-3 mb-3" />
                     <section className={`${styles["content"]} px-2`}>
                         <ReactMarkdown
-                            children={attributes.content}
+                            children={props.content}
                             components={{
                                 code({ node, inline, className, children, ...props }) {
                                     const match = /language-(\w+)/.exec(className || "")
@@ -98,8 +103,12 @@ const PostPage: FC<IProps> = ({ post: { attributes },}) => {
                         />
                     </section>
                 </article>
-                <hr />
-                <section className={`${styles["comments"]} container flex items-center justify-center`}>
+                <hr className={styles["separator"]}/>
+                <section className={`${styles["comments"]} container flex items-center justify-center flex-col`}>
+                    <h2 className="block w-full text-left text-white text-2xl mt-2 mb-5">
+                        <i className={`${styles["comments-icon"]} bi bi-chat-left-text`}/>
+                        Comentários
+                    </h2>
                     <UtterancComments/>
                 </section>
             </div>
